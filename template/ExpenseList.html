@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    <title>Expense & Account Transactions</title>
+{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4 text-primary fw-bold">All Transactions</h2>
+    
+    <div class="table-responsive shadow-sm rounded">
+        <table class="table table-hover table-bordered align-middle">
+            <thead class="table-dark text-center text-uppercase">
+                <tr>
+                    <th scope="col">Type</th>
+                    <th scope="col">Amount (₹)</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Category</th>
+                    <th scope="col">Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for txn in transactions %}
+                        <tr>
+                            <td class="text-center align-middle">
+                                {% if txn.txn_type == 'Debit' %}
+                                <a href="{% url 'update' pk=txn.pk %}" class="text-decoration-none text-primary fw-semibold">
+                                    Expense
+                                </a>
+                            {% else %}
+                                <span class="fw-semibold {% if txn.transaction_type == 'Credit' %}text-success{% else %}text-danger{% endif %}">
+                                    {{ txn.transaction_type }}
+                                </span>
+                            {% endif %}
+                        </td>
+
+                        <td class="text-center fw-semibold align-middle 
+                            {% if txn.transaction_type == 'Credit' %}
+                                text-success
+                            {% elif txn.transaction_type == 'Debit' %}
+                                text-danger
+                            {% endif %}">
+                            ₹{{ txn.amount|floatformat:2 }}
+                        </td>
+
+                        <td class="text-center align-middle">
+                            {{ txn.date|date:"d M Y" }}
+                        </td>
+                        
+                        <td class="text-center align-middle">
+                            {% if txn.category  %}
+                                {{ txn.category }}
+                            {% else %}
+                                -
+                            {% endif %}
+                        </td>
+
+                        <td class="text-center align-middle">
+                            {% if txn.txn_type == 'Expense' %}
+                                {{ txn.description }}
+                            {% else %}
+                                {% if txn.transaction_type == 'Credit' %}
+                                    ₹{{ txn.amount|floatformat:2 }} added to the account
+                                {% elif txn.transaction_type == 'Debit' %}
+                                    ₹{{ txn.amount|floatformat:2 }} debited from the account for {{txn.category}}
+                                {% else %}
+                                    -
+                                {% endif %}
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="5" class="text-center text-muted fst-italic py-4">No transactions found.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
