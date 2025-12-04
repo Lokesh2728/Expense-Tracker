@@ -27,7 +27,7 @@ SECRET_KEY = "django-insecure-f@#z@d2si^o4042&)lukw-i0*b*z!1ctc+q0rab9ws$0y*st#@
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [".render.com"]
+ALLOWED_HOSTS = [".onrender.com"]
 
 CSRF_TRUSTED_ORIGINS = [
     'https://expense-tracker-6v28.onrender.com',
