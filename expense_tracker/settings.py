@@ -30,7 +30,7 @@ DEBUG = True
 ALLOWED_HOSTS = [".onrender.com"]
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://expense-tracker-6v28.onrender.com',
+    "https://expense-tracker-4uvz.onrender.com"
 ]
 
 
